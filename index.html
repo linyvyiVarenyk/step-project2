@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+   <link rel="stylesheet" href="style.css">
+    <title>THIRD STEP - CARDS </title>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-wrapper">
+        <div class="header-logo">
+          <img class="header-logo-img"src="./img/logo.png" alt="logo">
+          <h1 class="header-logo-text">HEALTH - <br> SERVICE </h1>
+        </div>
+        <button class="btn header-btn-login">LOGIN</button>
+        <button class="btn header-btn-create">Create Visit</button>
+      </div>
+    </div>
+    </div>
+    </header>
+    <main>
+      <section>
+        <div class="container">
+          <div class="main-wrapper">
+            <div class="main-about">
+              <h2 class="main-about-header"> Welcome to HEALTH - SERVICE Online</h2>
+              <div class="main-text">
+                <p>By <a class="main-text-login" href="#">Log in </a> you can apply for the following schemes online:</p>
+                <p class="main-text-card">Medical Visit Card</p>
+                <p>If you need help please look at our <a class="main-text-faq" href="#">Frequently Asked Questions</a>.</p>
+              </div>
+            </div>
+            <div class="main-filter">
+              <form class="main-filter-form" action="" id="visits-filter-form">
+              <div id="dropdownTitle" class="main-filter-title">
+                <input type="text" placeholder="Visit title" class="main-filter-title-input" id="titleSearch" onkeyup="filterFunction()">
+                <ul>
+                  <li >Visit to Cardiologist</li>
+                  <li >Visit to Therapist</li>
+                  <li >Visit to Dentist</li>
+               </ul>
+            </div>
+            <select class="main-filter-status" id="visit-status">
+              <option value="all">All</option>
+              <option value="open">Open</option>
+              <option value="done">Done</option>
+            </select>
+            <select class="main-filter-priority" id="visit-priority">
+              <option value="all">All</option>
+              <option value="high">High</option>
+              <option value="normal">Normal</option>
+              <option value="low">Low</option>
+            </select>
+            <button class="btn filter-search-btn">Search</button>
+          </form>
+            </div>
+            <div class="main-card-board">
+              <h2 class="main-card-board-text">No items have been added</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    <footer>
+      <div class="container">
+        <div class="footer-wrapper">
+          <button class="btn footer-btn">Privacy Statement</button>
+          <button class="btn footer-btn">Security</button>
+          <button class="btn footer-btn">Data Protection</button>
+        </div>
+      </div>    
+    </footer>
+
+    <div class="modal-container" id="modal-login-form">
+      <form action="#" class="modal-login-form" netlify>
+        
+        <div class="modal-login-form-close">
+          <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="48px" height="48px"><path d="M18,21H6c-1.657,0-3-1.343-3-3V6c0-1.657,1.343-3,3-3h12c1.657,0,3,1.343,3,3v12	C21,19.657,19.657,21,18,21z" opacity=".35"/><path d="M14.812,16.215L7.785,9.188c-0.384-0.384-0.384-1.008,0-1.392l0.011-0.011c0.384-0.384,1.008-0.384,1.392,0l7.027,7.027	c0.384,0.384,0.384,1.008,0,1.392l-0.011,0.011C15.82,16.599,15.196,16.599,14.812,16.215z"/><path d="M7.785,14.812l7.027-7.027c0.384-0.384,1.008-0.384,1.392,0l0.011,0.011c0.384,0.384,0.384,1.008,0,1.392l-7.027,7.027	c-0.384,0.384-1.008,0.384-1.392,0l-0.011-0.011C7.401,15.82,7.401,15.196,7.785,14.812z"/></svg>
+        </div>  
+
+          <h4 class="modal-login-form-title">LOG IN</h4>
+          
+          <div class="modal-login-form-field">
+              <input type="email" class="modal-login-form-email" id="modal-login-form-email" name="email" required placeholder="Enter your email">
+          </div>
+
+          <div class="modal-login-form-field">
+              <input type="text" class="modal-login-form-password" id="modal-form-password" name="password" required placeholder="Enter your password">
+          </div>
+          <button type="submit" class="btn modal-login-form-submit">Submit</button> 
+      </form>
+  </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
