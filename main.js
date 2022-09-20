@@ -1,9 +1,4 @@
-// import sendUserInfo from "./functions/sendRequests.js";
-
-const btnLogin = document.querySelector(".header-btn-login");
-const btnCreateVisit = document.querySelector(".header-btn-create");
-
-const cardDeck = document.querySelector(".main-wrapper");
+import sendUserInfo from "./functions/sendRequests.js";
 
 //login form
 
