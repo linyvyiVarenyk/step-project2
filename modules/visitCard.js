@@ -3,7 +3,7 @@ import {visitForm, visitCardiologistForm, visitDentistForm, visitTherapistForm} 
 import {getVisits, amendVisit} from '../functions/sendRequest.js';
 
 export class visitCard {
-    constructor({id, doctorTitle, purpose, description, description, priority, patientName}) {
+    constructor({id, doctorTitle, purpose, description, priority, patientName}) {
         this.doctor = doctorTitle;
         this.purpose = purpose;
         this.description = description;

@@ -1,4 +1,4 @@
-import sendUserInfo from "./functions/sendRequests.js";
+// import sendUserInfo from "./functions/sendRequests.js";
 
 //login form
 
