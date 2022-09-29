@@ -55,7 +55,8 @@ export const submitForm = async (userInfo) => {
         if (additionalFunction.isFetchValid(checkResult)) {
             return new Error()
         }
-        return true
+        const submitResult = await checkResult.json()
+        return submitResult
 
     } catch (e) {
         console.log('submit false')

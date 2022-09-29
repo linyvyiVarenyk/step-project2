@@ -94,7 +94,6 @@ export class VisitForm extends ModalVisit.Modal {
 
     async submitForm(e) {
         e.preventDefault()
-
         let validation = undefined
         if (e.target === this.submit) {
             validation = this.additionalContainer.children.length > 0 ? [...this.additionalContainer.children].some(item => (item.value.length >= 3)) : false
@@ -111,7 +110,7 @@ export class VisitForm extends ModalVisit.Modal {
                 }
                 const cardCreate = await functions.submitForm(userInfo)
                 if (cardCreate){
-                    const Card  = new card.VisitCard({...userInfo, id:'-'}, this.container)
+                    const Card  = new card.VisitCard(cardCreate, this.container)
                     Card.render()
                     super.close()
                     this.formElem.remove()
@@ -148,8 +147,7 @@ class VisitDentistForm extends VisitForm {
 
     constructor() {
         super()
-        this.laseVisit = new crete.Element(
-            {name: 'input', cssClass: 'form-input', placeholder: 'enter your last visit', value: '', inputName: 'lastVisit'}).render()
+        this.laseVisit = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your last visit', value: '', inputName: 'lastVisit'}).render()
     }
 
     render(additionalContainer) {

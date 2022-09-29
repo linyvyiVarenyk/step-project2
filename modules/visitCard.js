@@ -10,9 +10,9 @@ class VisitCard {
         this.removeBtn  = new crete.Element({name: 'button', cssClass: 'removeBtn', textContent:'X',type:'button'}).render()
         this.doctor = new crete.Element({name: 'p', cssClass: 'doctor-container',textContent:`${visitInfo.doctor}`}).render()
         this.emergency = new crete.Element({name: 'p', cssClass: 'emergency-container',textContent:`${visitInfo.emergency}`}).render()
+        this.amendVisit = new crete.Element({name: 'button', cssClass: 'amendVisit', type:'button', textContent:'amendVisit'}).render()
         this.showMore = new crete.Element({name: 'button', cssClass: 'showMore', type:'button', textContent:'show less'}).render()
        // дообити редагувати візит, щоб переходило на вже заповнену форму ->
-        this.amendVisit = new crete.Element({name: 'button', cssClass: 'amendVisit', type:'button', textContent:'amendVisit'}).render()
         this.cardAdditionalContainer = new crete.Element({name: 'div', cssClass: 'card-container--additionalInfo',}).render()
 
         this.aditionalInfo = {}
