@@ -1,224 +1,193 @@
-import {addVisit} from '../functions/sendRequests.js';
-import {addedVisitSuccess,addedVisitError} from "../functions/alert.js";
-import {visitCard, visitTherapistCard, visitDentistCard, visitCardiologistCard} from '../modules/visitCard.js';
+import crete from "../functions/classUtils.js";
+import functions from '../functions/API.js'
+import ModalVisit from "./modalVisit.js";
+import card from './visitCard.js'
 
-export class visitForm {
+export class VisitForm extends ModalVisit.Modal {
+    constructor(container) {
+        super()
+        this.container = container
+        this.formElem = new crete.Element({name: 'form', cssClass: 'card-form'}).render()
+        this.title = new crete.Element({name: 'h3', cssClass: 'form-title', textContent: 'Create visit'}).render()
+        this.name = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your name', value: '', inputName: 'name',}).render()
+        this.surname = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your surname', value: '', inputName: 'surname'}).render()
+        this.selectDoctor = new crete.Element({name: 'select', cssClass: 'form-select',}).render()
+        this.selectEmergency = new crete.Element({name: 'select', cssClass: 'form-select',}).render()
+        this.submit = new crete.Element({name: 'button', cssClass: 'form-btn', textContent: 'submit', type: 'submit'}).render()
+        this._additionalContainer = new crete.Element({name: 'div', cssClass: 'form-additional-container',}).render()
+    }
 
-    sendVisitData(form,wrapper) { // метод который навешивает слушатель для сабмита, и при сабмите собираем все данные для создания нового визита
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            let doctorTitle = event.target.querySelector('[name="doctortitle"]').value;
-            let purpose = event.target.querySelector('[name="purpose"]').value;
-            let description = event.target.querySelector('[name="description"]').value;
-            let priority = event.target.querySelector('[name="priority"]').value;
-            let patientName = event.target.querySelector('[name="patientname"]').value;
-            let lastVisitDate = event.target.querySelector('[name="lastvisitdate"]').value;
-            let age = event.target.querySelector('[name="age"]').value;
-            let pressure = event.target.querySelector('[name="pressure"]').value;
-            let BMI = event.target.querySelector('[name="BMI"]').value;
-            let diseases = event.target.querySelector('[name="diseases"]').value;
+    get additionalContainer() {
+        return this._additionalContainer
+    }
 
-            let background = document.querySelector('.modal-backdrop') // Находим элементы по модалкам что бы его убрать после отправки данных
-            let modal = document.querySelector('.modal') // Находим элементы по модалкам что бы его убрать после отправки данных
+    getDoctorOption() {
+        if (this.selectDoctor.children.length === 0) {
 
-            if (document.body.classList.contains('modal-open') || background || modal) { // проверям и удаляем все что связано по модалке
-                document.body.classList.remove('modal-open')
-                background.remove()
-                modal.remove()
-            }
-switch (doctorTitle) {
-    case 'Dentist':
-        if (purpose !== '' && description !== '' && priority !== '' && patientName !== '' && lastVisitDate !== '') {// проверям наши инуты на пустоту и если не пустые то создаем визит
-            addVisit(JSON.stringify({
-                title: 'Visit to Dentist',
-                doctor: doctorTitle,
-                purpose: purpose,
-                description: description,
-                priority: priority,
-                patient: patientName,
-                lastvisitdate: lastVisitDate
-                }))
-                .then(patient => {
-                    if(patient){ // проверяем отправленые обьект если он есть значит генерим новую карточку пользователя и показываем алерт что все хорошо, а если нет то показываем ошибку алерт
-                        const card = new visitDentistCard(patient);
-                        card.renderCard(wrapper);
-                        addedVisitSuccess()
-                    } else  {
-                        addedVisitError()
-                    }
-                })
-            }
-        break;
-        case 'Therapist':
-            if (purpose !== '' && description !== '' && priority !== '' && patientName !== '' && age !== '') {// проверям наши инуты на пустоту и если не пустые то создаем визит
-                addVisit(JSON.stringify({
-                    title: 'Visit to Therapist',
-                    doctor: doctorTitle,
-                    purpose: purpose,
-                    description: description,
-                    priority: priority,
-                    patient: patientName,
-                    age: age
-                    }))
-                    .then(patient => {
-                        if(patient){ // проверяем отправленые обьект если он есть значит генерим новую карточку пользователя и показываем алерт что все хорошо, а если нет то показываем ошибку алерт
-                            const card = new visitTherapistCard(patient);
-                            card.renderCard(wrapper);
-                            addedVisitSuccess()
-                        } else  {
-                            addedVisitError()
-                        }
-                    })
-                }
-            break;
-            case 'Cardiologist':
-            if (purpose !== '' && description !== '' && priority !== '' && patientName !== '' && pressure !== '' && BMI !== '' && diseases !== '' && age !== '') {// проверям наши инуты на пустоту и если не пустые то создаем визит
-                addVisit(JSON.stringify({
-                    title: 'Visit to Cardiologist',
-                    doctor: doctorTitle,
-                    purpose: purpose,
-                    description: description,
-                    priority: priority,
-                    patient: patientName,
-                    age: age
-                    }))
-                    .then(patient => {
-                        if(patient){ // проверяем отправленые обьект если он есть значит генерим новую карточку пользователя и показываем алерт что все хорошо, а если нет то показываем ошибку алерт
-                            const card = new visitCardiologistCard(patient);
-                            card.renderCard(wrapper);
-                            addedVisitSuccess()
-                        } else  {
-                            addedVisitError()
-                        }
-                    })
-                }
-            break;
+            this.selectDoctor.insertAdjacentHTML('afterbegin', `
+            <option value="">Chose doctors</option>
+            <option value="dentist">Dentist</option>
+            <option value="therapist">Therapist</option>
+            <option value="cardiologist">Cardiologist</option>`)
+        }
+    }
 
-    default:
-        break;
-}
-            // if (doctorTitle == 'Dentist' && purpose !== '' && description !== '' && priority !== '' && patientName !== '') {// проверям наши инуты на пустоту и если не пустые то создаем визит
-            //     addVisit(JSON.stringify({
-            //         title: 'Visit to Dentist',
-            //         doctor: doctorTitle,
-            //         description: description,
-            //         purpose: purpose,
-            //         priority: priority,
-            //         patient: patientName,
-            //         lastvisitdate: lastVisitDate
-            //         }))
-            //         .then(patient => {
-            //             if(patient){ // проверяем отправленые обьект если он есть значит генерим новую карточку пользователя и показываем алерт что все хорошо, а если нет то показываем ошибку алерт
-            //                 const card = new VisitDentistCard(patient);
-            //                 card.renderCard(wrapper);
-            //                 addedVisitSuccess()
-            //             } else  {
-            //                 addedVisitError()
-            //             }
-            //         })
-            //     }
+    getEmergencyOption() {
+        if (this.selectEmergency.children.length === 0) {
+
+            this.selectEmergency.insertAdjacentHTML('afterbegin', `
+            <option value="">Chose emergency</option>
+            <option value="high">High</option>
+            <option value="normal">Normal</option>
+            <option value="low">Low</option>`)
+        }
+    }
+
+    formGetContent() {
+        this.getDoctorOption()
+        this.getEmergencyOption()
+        const content = [this.title, this.name, this.surname, this.selectDoctor, this.selectEmergency, this._additionalContainer, this.submit,]
+        content.forEach(item => {
+            this.formElem.insertAdjacentElement('beforeend', item)
         })
     }
 
-    render(wrapper) {
-        this.formElem = document.createElement('form')
-        this.formElem.insertAdjacentHTML("afterbegin", `
-            <div class="form-group">
-            <select name="doctortitle" class="form-select" id="doctor">
-                <option value="">All doctors</option>
-                <option value="dentist">Dentist</option>
-                <option value="cardiologist">Cardiologist</option>
-                <option value="therapist">Therapist</option>
-            </select>
-            </div>
-            <div class="form-group">
-                <input id="purpose" class="form-control" name="purpose" placeholder="Purpose">
-            </div>
-            <div class="form-group">
-                <input id="description" class="form-control" name="description" placeholder="Description">
-            </div>
-            <div class="form-group">
-            <select name="priority" class="form-select" id="priority">
-                <option value="all">All doctors</option>
-                <option value="high">High</option>
-                <option value="normal">Normal</option>
-                <option value="low">Low</option>
-            </select>
-            </div>
-            <div class="form-group-additional">     
-            </div>
-            <button class="btn form-btn-create">Create</button>
-            <button class="btn form-btn-close">Close</button>  
-        `)
+    listener() {
+        this.formElem.addEventListener('click', this.submitForm.bind(this))
+        this.selectDoctor.addEventListener('change', this.showAdditionalFields.bind(this))
+        this.modal.addEventListener('click', this.clearListener)
+    }
 
-        this.sendVisitData(this.formElem,wrapper)
+    clearListener(e) {
+        e.preventDefault()
+        if (e.target === this) {
+            this.remove()
+        }
+    }
 
-        return this.formElem;
+    showAdditionalFields(e) {
+
+        e.preventDefault()
+        const doctor = e.target.value
+        const DentistForm = new VisitDentistForm()
+        const CardiologistForm = new VisitCardiologistForm()
+        const TherapistForm = new VisitTherapistForm()
+
+        if (this.additionalContainer.children.length > 0) {
+            [...this.additionalContainer.children].forEach(item => item.remove())
+        }
+        switch (doctor) {
+            case 'dentist':
+                DentistForm.render(this.additionalContainer)
+                break;
+            case 'cardiologist':
+                CardiologistForm.render(this.additionalContainer)
+                break;
+            case 'therapist':
+                TherapistForm.render(this.additionalContainer)
+                break;
+        }
+    }
+
+
+    async submitForm(e) {
+        e.preventDefault()
+
+        let validation = undefined
+        if (e.target === this.submit) {
+            validation = this.additionalContainer.children.length > 0 ? [...this.additionalContainer.children].some(item => (item.value.length >= 3)) : false
+
+            const additionalInfo = this.getAdditionalInfo()
+
+            if(validation){
+                const userInfo = {
+                    name: this.name.value,
+                    email: this.surname.value,
+                    doctor: this.selectDoctor.value,
+                    emergency: this.selectEmergency.value,
+                    ...additionalInfo
+                }
+                const cardCreate = await functions.submitForm(userInfo)
+                if (cardCreate){
+                    const Card  = new card.VisitCard({...userInfo, id:'-'}, this.container)
+                    Card.render()
+                    super.close()
+                    this.formElem.remove()
+                }
+            }
+        }
+    }
+
+    getAdditionalInfo() {
+        let additionalInfo = {}
+        const formChildren = [...this.additionalContainer.children] || []
+
+        formChildren.forEach(item => {
+            const name = item.name
+            const value = item.value
+            additionalInfo = {...additionalInfo, [name]:value}
+        })
+        return additionalInfo
+    }
+
+
+    render() {
+        super.render()
+
+        this.formGetContent()
+        this.modal.append(this.formElem)
+        this.listener()
+    }
+
+
+}
+
+class VisitDentistForm extends VisitForm {
+
+    constructor() {
+        super()
+        this.laseVisit = new crete.Element(
+            {name: 'input', cssClass: 'form-input', placeholder: 'enter your last visit', value: '', inputName: 'lastVisit'}).render()
+    }
+
+    render(additionalContainer) {
+        additionalContainer.append(this.laseVisit)
     }
 }
 
-export class visitDentistForm extends visitForm {
-    
-    sendVisitData(form,wrapper);
-
-    render()  {
-        super.render();
-        const formAdditionalElement = document.querySelector('.form-group-additional');
-        this.formDivElem = document.createElement('div');
-        this.formDivElem.classList.add("form-additional");
-        this.formDivElem.innerHTML = `
-            <div class="form-group> 
-                    <input id="lastVisitDate" class="form-control" name="lastvisitdate" placeholder="Last visit date">
-            </div>
-        `
-        formAdditionalElement.replaceWith(this.render())
+class VisitCardiologistForm extends VisitForm {
+    constructor() {
+        super()
+        this.imb = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your imb', value: '', inputName: 'imb'}).render()
+        this.pressure = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your normal pressure', value: '', inputName: 'pressure'}).render()
+        this.disease = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your disease', value: '', inputName: 'disease'
+        }).render()
+        this.age = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your age', value: '', inputName: 'age'}).render()
     }
-};
 
-export class visitCardiologistForm extends visitForm {
- 
-    sendVisitData(form,wrapper);
-
-    render()  {
-        super.render();
-        const formAdditionalElement = document.querySelector('.form-group-additional');
-        this.formDivElem = document.createElement('div');
-        this.formDivElem.classList.add("form-additional");
-        this.formDivElem.innerHTML = `
-            <div class="form-group> 
-                    <input id="lastVisitDate" class="form-control" name="lastvisitdate" placeholder="Last visit date">
-            </div>
-            <div class="form-group> 
-                    <input id="pressure" class="form-control" name="pressure" placeholder="Normal pressure">
-            </div>
-            <div class="form-group> 
-                    <input id="BMI" class="form-control" name="BMI" placeholder="BMI">
-            </div>
-            <div class="form-group> 
-                    <input id="diseases" class="form-control" name="diseases" placeholder="Transferred diseases of the cardiovascular system">
-            </div>
-            <div class="form-group> 
-                    <input id="age" class="form-control" name="age" placeholder="Age">
-            </div>
-        `
-        formAdditionalElement.replaceWith(this.render())
+    render(additionalContainer) {
+        const inputs = [this.imb, this.pressure, this.disease, this.age]
+        inputs.forEach(input => {
+            additionalContainer.append(input)
+        })
     }
-};
+}
 
-export class visitTherapistForm extends visitForm {
-
-    sendVisitData(form,wrapper);
-
-    render()  {
-        super.render();
-        const formAdditionalElement = document.querySelector('.form-group-additional');
-        this.formDivElem = document.createElement('div');
-        this.formDivElem.classList.add("form-additional");
-        this.formDivElem.innerHTML = `
-            <div class="form-group> 
-                    <input id="age" class="form-control" name="age" placeholder="Age">
-            </div>
-        `
-        formAdditionalElement.replaceWith(this.render())
+class VisitTherapistForm extends VisitForm {
+    constructor() {
+        super()
+        this.age = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your age', value: ''}).render()
     }
-};
+
+    render(additionalContainer) {
+        additionalContainer.append(this.age)
+    }
+
+}
+
+export default {
+    VisitTherapistForm,
+    VisitCardiologistForm,
+    VisitDentistForm,
+    VisitForm,
+}

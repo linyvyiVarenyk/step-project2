@@ -1,27 +1,81 @@
-import sendUserInfo from "./functions/sendRequests.js";
-
-//login form
+import functions from './functions/API.js'
+import visitForm from "./modules/visitForm.js";
+import modalForm from "./modules/modalVisit.js";
+import additionalFunction from "./functions/additionalFunction.js";
 
 const MODAL_ACTIVE_CLASS = 'modal-active';
 
-const loginFormBtn = document.querySelector('.header-btn-login');
-const modalForm = document.querySelector('#modal-login-form');
+//elements
+
+const modal = document.querySelector('.modal-container')
+const loginForm = document.querySelector('.modal-login-form')
+const loginFormBtn = document.querySelector('#login');
+const createVisit = document.querySelector('#visit')
+const cardContainer = document.querySelector('#CardContainer')
+
+//class
+
+const cardModal = new modalForm.Modal()
+const visit = new visitForm.VisitForm(cardContainer)
+
+//Listeners
+
+const LoginBtn = (e) => {
+    e.preventDefault()
+    modal.classList.add(MODAL_ACTIVE_CLASS);
+    document.body.classList.add('body-fixed');
+    modal.addEventListener('click', (closeModals))
+}
+
+
+const login = async (e) => {
+    e.preventDefault();
+    const cursorTarget = e.target
+    if (cursorTarget.nodeName === "BUTTON") {
+        const inputArr = [...loginForm.children].map(children => {
+            if (children.classList.contains('modal-login-form-field')) {
+                return children.firstElementChild.value
+            }
+        }).filter(result => additionalFunction.isSomeThing(result))
+        const userInfo = {email: inputArr[0], password: inputArr[1]}
+
+        const result = await functions.getToken(userInfo)
+
+        if (await result.status) {
+            sessionStorage.setItem('userData', JSON.stringify(result.token))
+            loginFormBtn.classList.toggle('hide')
+            createVisit.classList.toggle('hide')
+            closeModalLayer()
+            const getCards = await functions.getCards(result.token)
+            additionalFunction.showAllCard(cardContainer, getCards)
+        }
+    }
+}
+
+const showVisitModal = (e) => {
+    e.preventDefault()
+    visit.render()
+}
+
+loginFormBtn.addEventListener('click', LoginBtn)
+loginForm.addEventListener('click', login)
+createVisit.addEventListener('click', showVisitModal)
+
+
+const clearEvents = (action) => {
+    modal.removeEventListener('click', action)
+}
+
+const closeModalLayer = () => {
+    modal.classList.remove(MODAL_ACTIVE_CLASS)
+    document.body.classList.remove('body-fixed');
+    clearEvents(closeModals)
+}
 
 function closeModals(e) {
     e.preventDefault();
-
-    modalForm.classList.remove(MODAL_ACTIVE_CLASS);
-    
-    document.body.classList.remove ('body-fixed');
-  }
-
-loginFormBtn.addEventListener('click', function () {
-    modalForm.classList.add(MODAL_ACTIVE_CLASS);
-
-    const modalFormClose = document.querySelector('.modal-login-form-close');
-    modalFormClose.addEventListener('click', closeModals);
-    
-    document.body.classList.add ('body-fixed');
-    
-    form.addEventListener('submit', sendUserInfo);
-});
+    const cursorTarget = e.target
+    if (cursorTarget === e.currentTarget) {
+        closeModalLayer()
+    }
+}
