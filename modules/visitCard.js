@@ -8,9 +8,11 @@ class VisitCard {
         this.cardsContainer = cardsContainer
         this.cardContainer = new crete.Element({name: 'div', cssClass: 'card-container',}).render()
         this.removeBtn  = new crete.Element({name: 'button', cssClass: 'removeBtn', textContent:'X',type:'button'}).render()
-        this.doctor = new crete.Element({name: 'p', cssClass: 'card-container',textContent:`${visitInfo.doctor}`}).render()
-        this.emergency = new crete.Element({name: 'p', cssClass: 'card-container',textContent:`${visitInfo.emergency}`}).render()
+        this.doctor = new crete.Element({name: 'p', cssClass: 'doctor-container',textContent:`${visitInfo.doctor}`}).render()
+        this.emergency = new crete.Element({name: 'p', cssClass: 'emergency-container',textContent:`${visitInfo.emergency}`}).render()
         this.showMore = new crete.Element({name: 'button', cssClass: 'showMore', type:'button', textContent:'show less'}).render()
+       // дообити редагувати візит, щоб переходило на вже заповнену форму ->
+        this.amendVisit = new crete.Element({name: 'button', cssClass: 'amendVisit', type:'button', textContent:'amendVisit'}).render()
         this.cardAdditionalContainer = new crete.Element({name: 'div', cssClass: 'card-container--additionalInfo',}).render()
 
         this.aditionalInfo = {}
@@ -34,6 +36,7 @@ class VisitCard {
         Object.values(this).forEach(card =>{
             if(card !== this.aditionalInfo && card !== this.visitInfo && card !== this.cardContainer && this.cardsContainer !==card)
             this.cardContainer.insertAdjacentElement('beforeend', card)
+            //cardContainer треба запулить сюди const mainCardBoard = document.querySelector('.main-card-board')
         })
     }
 
@@ -55,7 +58,6 @@ class VisitCard {
         })
 
     }
-
 
     render(){
         this.getId()

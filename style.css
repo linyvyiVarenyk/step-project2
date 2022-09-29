@@ -105,7 +105,7 @@ body {
 }
 
 .main-filter {
-    display: none;
+    display: block;
 }
 
 .main-filter-form {
@@ -197,7 +197,7 @@ body {
     background: rgba(177, 217, 219, 0.2);
     border-radius: 25px;
     margin: 25px;
-    display: none;
+    display: block;
 }
 
 .main-card-board-text {
@@ -342,4 +342,8 @@ body {
     display: block;
     box-shadow: none;
     background-color: rgb(54, 197, 54, .23);
+}
+.card-container {
+    background: #7CD2D7;
+    border: 1px solid rgb(0, 0, 0, .2);
 }
