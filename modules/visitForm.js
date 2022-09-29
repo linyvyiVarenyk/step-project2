@@ -8,9 +8,11 @@ export class VisitForm extends ModalVisit.Modal {
         super()
         this.container = container
         this.formElem = new crete.Element({name: 'form', cssClass: 'card-form'}).render()
-        this.title = new crete.Element({name: 'h3', cssClass: 'form-title', textContent: 'Create visit'}).render()
+        this.title = new crete.Element({name: 'h3', cssClass: 'form-title', textContent: 'VISIT INFORMATION'}).render()
         this.name = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your name', value: '', inputName: 'name',}).render()
         this.surname = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your surname', value: '', inputName: 'surname'}).render()
+        this.purpose = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your purpose', value: '', inputName: 'purpose'}).render()
+        this.description = new crete.Element({name: 'input', cssClass: 'form-input', placeholder: 'enter your description', value: '', inputName: 'description'}).render()
         this.selectDoctor = new crete.Element({name: 'select', cssClass: 'form-select',}).render()
         this.selectEmergency = new crete.Element({name: 'select', cssClass: 'form-select',}).render()
         this.submit = new crete.Element({name: 'button', cssClass: 'form-btn', textContent: 'submit', type: 'submit'}).render()
@@ -46,7 +48,7 @@ export class VisitForm extends ModalVisit.Modal {
     formGetContent() {
         this.getDoctorOption()
         this.getEmergencyOption()
-        const content = [this.title, this.name, this.surname, this.selectDoctor, this.selectEmergency, this._additionalContainer, this.submit,]
+        const content = [this.title, this.name, this.surname, this.purpose, this.description, this.selectDoctor, this.selectEmergency, this._additionalContainer, this.submit]
         content.forEach(item => {
             this.formElem.insertAdjacentElement('beforeend', item)
         })

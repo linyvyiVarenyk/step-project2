@@ -12,6 +12,9 @@ const loginForm = document.querySelector('.modal-login-form')
 const loginFormBtn = document.querySelector('#login');
 const createVisit = document.querySelector('#visit')
 const cardContainer = document.querySelector('#CardContainer')
+const mainAboutElement = document.querySelector('.main-about')
+const mainFilterBlock = document.querySelector('.main-filter')
+const mainCardBoard = document.querySelector('.main-card-board')
 
 //class
 
@@ -45,6 +48,10 @@ const login = async (e) => {
             sessionStorage.setItem('userData', JSON.stringify(result.token))
             loginFormBtn.classList.toggle('hide')
             createVisit.classList.toggle('hide')
+            mainAboutElement.classList.toggle('hide')
+            mainFilterBlock.classList.toggle('hide')
+            mainCardBoard.classList.toggle('hide')
+
             closeModalLayer()
             const getCards = await functions.getCards(result.token)
             additionalFunction.showAllCard(cardContainer, getCards)
