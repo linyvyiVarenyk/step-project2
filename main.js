@@ -1,6 +1,5 @@
 import functions from './functions/API.js'
 import visitForm from "./modules/visitForm.js";
-import modalForm from "./modules/modalVisit.js";
 import additionalFunction from "./functions/additionalFunction.js";
 
 const MODAL_ACTIVE_CLASS = 'modal-active';
@@ -15,11 +14,6 @@ const cardContainer = document.querySelector('#CardContainer')
 const mainAboutElement = document.querySelector('.main-about')
 const mainFilterBlock = document.querySelector('.main-filter')
 const mainCardBoard = document.querySelector('.main-card-board')
-
-//class
-
-const cardModal = new modalForm.Modal()
-const visit = new visitForm.VisitForm(cardContainer)
 
 //Listeners
 
@@ -61,6 +55,7 @@ const login = async (e) => {
 
 const showVisitModal = (e) => {
     e.preventDefault()
+    const visit = new visitForm.VisitForm(cardContainer)
     visit.render()
 }
 
