@@ -71,13 +71,13 @@ body {
 .main-wrapper {
     background: #ffffff;
     border-radius: 38px;
-    text-align: center;
     padding-top: 80px;
     padding-bottom: 10px;
 }
 
 .main-about {
     display: block;
+    text-align: center;
     font-weight: 600;
     font-size: 32px;
     line-height: 38px;
@@ -193,11 +193,14 @@ body {
 }
 
 .main-card-board {
-    text-align: center;
+    /* text-align: center; */
     background: rgba(177, 217, 219, 0.2);
     border-radius: 25px;
     margin: 25px;
     display: block;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
 }
 
 .main-card-board-text {
@@ -346,4 +349,5 @@ body {
 .card-container {
     background: #7CD2D7;
     border: 1px solid rgb(0, 0, 0, .2);
+
 }

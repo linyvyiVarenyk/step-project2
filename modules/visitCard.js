@@ -3,9 +3,9 @@ import api from '../functions/API.js'
 
 class VisitCard {
 
-    constructor(visitInfo, cardsContainer) {
+    constructor(visitInfo) {
         this.visitInfo = visitInfo
-        this.cardsContainer = cardsContainer
+        this.cardsContainer = document.querySelector('.main-card-board')
         this.cardContainer = new crete.Element({name: 'div', cssClass: 'card-container',}).render()
         this.removeBtn  = new crete.Element({name: 'button', cssClass: 'removeBtn', textContent:'X',type:'button'}).render()
         this.doctor = new crete.Element({name: 'p', cssClass: 'doctor-container',textContent:`${visitInfo.doctor}`}).render()
@@ -36,7 +36,6 @@ class VisitCard {
         Object.values(this).forEach(card =>{
             if(card !== this.aditionalInfo && card !== this.visitInfo && card !== this.cardContainer && this.cardsContainer !==card)
             this.cardContainer.insertAdjacentElement('beforeend', card)
-            //cardContainer треба запулить сюди const mainCardBoard = document.querySelector('.main-card-board')
         })
     }
 
